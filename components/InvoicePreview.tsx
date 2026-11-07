@@ -47,61 +47,9 @@ export default function InvoicePreview({ data }: { data: InvoiceData }) {
       <div className="mb-6 flex justify-end">
         <button
           onClick={handlePrint}
-          className="flex items-center gap-2 rounded-lg bg-blueBerikut adalah kode keseluruhan file **`components/InvoicePreview.tsx`** yang sudah diperbarui secara lengkap, di mana seluruh bagian judul kolom pada tabel (`NO.`, `NAMA BARANG`, `JML`, `HARGA`, dan `TOTAL`) dipastikan menggunakan kelas **`text-center`** agar posisinya berada tepat di tengah:
-
-```tsx
-'use client'
-
-import { Printer } from 'lucide-react'
-
-interface InvoiceItem {
-  item_name: string
-  quantity: number
-  price: number
-  total: number
-}
-
-interface InvoiceData {
-  invoice_number: string
-  client_name: string
-  client_address: string
-  date: string
-  use_dp: boolean
-  notes: string
-  signatory: string
-  updated_at?: string
-  updated_by?: string
-  company: {
-    name: string
-    address: string
-  }
-  items: InvoiceItem[]
-}
-
-export default function InvoicePreview({ data }: { data: InvoiceData }) {
-  const handlePrint = () => {
-    window.print()
-  }
-
-  const subTotal = data.items.reduce((acc, item) => acc + item.total, 0)
-  const dpAmount = data.use_dp ? subTotal * 0.5 : 0
-  const remainingAmount = data.use_dp ? subTotal - dpAmount : 0
-
-  const formattedUpdateDate = data.updated_at
-    ? new Date(data.updated_at).toLocaleString('id-ID', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      })
-    : null
-
-  return (
-    <div className="mx-auto max-w-3xl bg-white p-8 shadow-md rounded-xl print-area">
-      <div className="mb-6 flex justify-end">
-        <button
-          onClick={handlePrint}
           className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white font-medium hover:bg-blue-700 transition"
         >
-          <Printer size="{18}"/> Cetak / Simpan PDF
+          <Printer size={18} /> Cetak / Simpan PDF
         </button>
       </div>
 
