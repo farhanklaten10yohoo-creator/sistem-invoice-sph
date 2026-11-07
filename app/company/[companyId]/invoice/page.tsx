@@ -1,18 +1,18 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter, useParams } from 'next/navigation'
 import { Plus, ArrowLeft, Building2, Pencil, Trash2 } from 'lucide-react'
 import InvoiceModal from '@/components/InvoiceModal'
 import InvoicePreview from '@/components/InvoicePreview'
 
-export default function InvoicePage() {
+function InvoiceContent() {
   const params = useParams()
   const companyId = params?.companyId as string
 
   const [company, setCompany] = useState<any>(null)
-  const [invoices, setInvoices] = useState<any[]>([])
+  const [invoiceList, setInvoiceList] = useState<any[]>([])
   const [selectedInvoice, setSelectedInvoice] = useState<any | null>(null)
   const [selectedInvoiceItems, setSelectedInvoiceItems] = useState<any[]>([])
   
@@ -45,7 +45,7 @@ export default function InvoicePage() {
       .order('created_at', { ascending: false })
 
     if (invData) {
-      setInvoices(invData)
+      setInvoiceList(invData)
       if (invData.length > 0) {
         const currentSelected = selectedInvoice ? invData.find(i => i.id === selectedInvoice.id) : invData[0]
         if (currentSelected) {
@@ -59,7 +59,7 @@ export default function InvoicePage() {
     setLoading(false)
   }
 
-  const selectInvoiceDetail = async (invoiceId: string, list = invoices) => {
+  const selectInvoiceDetail = async (invoiceId: string, list = invoiceList) => {
     const inv = list.find((i) => i.id === invoiceId)
     if (!inv) return
 
@@ -138,10 +138,10 @@ export default function InvoicePage() {
           <div className="flex-1 overflow-y-auto space-y-2 pr-1">
             {loading ? (
               <p className="text-xs text-gray-400 text-center py-4">Memuat data...</p>
-            ) : invoices.length === 0 ? (
-              <p className="text-xs text-gray-400 text-center py-4">Belum ada invoice</p>
+            ) : invoiceList.length === 0 ? (
+              <p className="text-xs text-gray-400 text-center py-4">Belum ada Invoice</p>
             ) : (
-              invoices.map((inv) => (
+              invoiceList.map((inv) => (
                 <div
                   key={inv.id}
                   onClick={() => selectInvoiceDetail(inv.id)}
@@ -196,7 +196,7 @@ export default function InvoicePage() {
             />
           ) : (
             <div className="flex h-full items-center justify-center bg-white rounded-xl border border-gray-200 p-12 text-gray-400 text-sm">
-              Silakan pilih atau buat invoice terlebih dahulu.
+              Silakan pilih atau buat Invoice terlebih dahulu.
             </div>
           )}
         </div>
@@ -210,5 +210,14 @@ export default function InvoicePage() {
         editData={editData}
       />
     </div>
+  )
+}
+
+// Pembungkus Suspense agar lolos build Vercel
+export default function InvoicePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500 text-sm">Memuat halaman Invoice...</div>}>
+      <InvoiceContent />
+    </Suspense>
   )
 }
