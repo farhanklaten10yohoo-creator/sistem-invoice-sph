@@ -84,11 +84,11 @@ export default function InvoicePreview({ data }: { data: InvoiceData }) {
         <table className="w-full border-collapse border border-black mb-4 text-xs">
           <thead>
             <tr className="bg-blue-600 text-white text-center font-bold">
-              <th className="border border-black py-2 px-2 w-10">NO.</th>
-              <th className="border border-black py-2 px-4 text-left">NAMA BARANG</th>
-              <th className="border border-black py-2 px-2 w-16">JML</th>
-              <th className="border border-black py-2 px-4 text-right">HARGA</th>
-              <th className="border border-black py-2 px-4 text-right">TOTAL</th>
+              <th className="border border-black py-2 px-2 w-10 text-center">NO.</th>
+              <th className="border border-black py-2 px-4 text-center">NAMA BARANG</th>
+              <th className="border border-black py-2 px-2 w-16 text-center">JML</th>
+              <th className="border border-black py-2 px-4 text-center">HARGA</th>
+              <th className="border border-black py-2 px-4 text-center">TOTAL</th>
             </tr>
           </thead>
           <tbody>
@@ -140,7 +140,6 @@ export default function InvoicePreview({ data }: { data: InvoiceData }) {
           <div className="text-center relative flex flex-col items-center">
             <p className="text-xs mb-1 font-medium">Hormat Kami,</p>
             
-            {/* Area Gambar Tanda Tangan */}
             <div className="h-16 flex items-center justify-center my-1">
               <img
                 src="/tanda-tangan.png"
