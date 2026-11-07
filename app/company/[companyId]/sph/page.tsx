@@ -1,15 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter, useParams } from 'next/navigation'
 import { Plus, ArrowLeft, Building2, Pencil, Trash2 } from 'lucide-react'
 import SphModal from '@/components/SphModal'
 import SphPreview from '@/components/SphPreview'
 
-export const dynamic = 'force-dynamic'
-
-export default function SphPage() {
+// Komponen utama yang menggunakan useParams dibungkus di sini
+function SphContent() {
   const params = useParams()
   const companyId = params?.companyId as string
 
@@ -212,5 +211,14 @@ export default function SphPage() {
         editData={editData}
       />
     </div>
+  )
+}
+
+// Wrapper utama dengan Suspense untuk memenuhi aturan Next.js 16
+export default function SphPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500 text-sm">Memuat halaman SPH...</div>}>
+      <SphContent />
+    </Suspense>
   )
 }
