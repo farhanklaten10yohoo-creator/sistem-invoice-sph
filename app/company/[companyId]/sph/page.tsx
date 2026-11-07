@@ -7,6 +7,8 @@ import { Plus, ArrowLeft, Building2, Pencil, Trash2 } from 'lucide-react'
 import SphModal from '@/components/SphModal'
 import SphPreview from '@/components/SphPreview'
 
+export const dynamic = 'force-dynamic'
+
 export default function SphPage() {
   const params = useParams()
   const companyId = params?.companyId as string
